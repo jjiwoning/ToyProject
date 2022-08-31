@@ -1,14 +1,7 @@
 package jiwon.board.repository;
 
 import jiwon.board.domain.Board;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface BoardRepository {
-
-    Long save(Board board);
-
-    void delete();
-
-    List<Board> findAll();
+public interface BoardRepository extends JpaRepository<Board, Long> {
 }

@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,6 +52,34 @@ class MemberRepositoryTest {
         List<Member> members = memberRepository.findAll();
         assertThat(members).contains(savedMember1, savedMember2);
 
+    }
+
+    @Test
+    @DisplayName("Member LoginId로 Member 찾기 테스트")
+    void findByLoginId(){
+        //given
+        Member member1 = new Member("aaa", "12345", "userA", "aaa@aaa.com", "010101010");
+        memberRepository.save(member1);
+
+        //when
+        Member findMember = memberRepository.findByLoginId(member1.getLoginId()).get();
+
+        //then
+        assertThat(findMember).isEqualTo(member1);
+    }
+
+    @Test
+    @DisplayName("Member LoginId로 Member 찾기 예외 테스트")
+    void findByLoginIdException(){
+        //given
+        Member member1 = new Member("aaa", "12345", "userA", "aaa@aaa.com", "010101010");
+        memberRepository.save(member1);
+
+        //when
+        Optional<Member> findMember = memberRepository.findByLoginId("aaa2");
+
+        //then
+        assertThat(findMember.isPresent()).isFalse();
     }
 
 }

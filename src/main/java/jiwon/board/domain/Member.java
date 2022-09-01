@@ -34,4 +34,12 @@ public class Member {
         this.eMail = eMail;
         this.phoneNumber = phoneNumber;
     }
+
+    //로그인 처리 메서드
+    public Member loginLogic(String password){
+        if(this.password.equals(password)){
+            return this;
+        }
+        throw new IllegalArgumentException("잘못된 비밀번호를 입력했습니다.");
+    }
 }

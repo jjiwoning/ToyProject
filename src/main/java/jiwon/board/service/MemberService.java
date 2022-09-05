@@ -1,6 +1,7 @@
 package jiwon.board.service;
 
 import jiwon.board.domain.Member;
+import jiwon.board.exception.LoginFailException;
 import jiwon.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class MemberService {
     //로그인
     public Member login(String loginId, String password){
         Member member = memberRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new IllegalArgumentException("로그인 아이디가 잘못 됐습니다."));
+                .orElseThrow(() -> new LoginFailException("로그인 아이디가 잘못 됐습니다."));
         return member.loginLogic(password);
     }
 
@@ -39,6 +40,11 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 회원 정보입니다."));
         //TODO: 어떤 방식으로 업데이트 파라미터 넘길지 고민
+    }
+
+    //중복 ID 확인
+    public boolean existsMember(String loginId){
+        return memberRepository.existsByLoginId(loginId);
     }
 
     //회원 탈퇴

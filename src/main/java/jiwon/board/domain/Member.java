@@ -1,5 +1,6 @@
 package jiwon.board.domain;
 
+import jiwon.board.exception.LoginFailException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +41,6 @@ public class Member {
         if(this.password.equals(password)){
             return this;
         }
-        throw new IllegalArgumentException("잘못된 비밀번호를 입력했습니다.");
+        throw new LoginFailException("잘못된 비밀번호를 입력했습니다.");
     }
 }

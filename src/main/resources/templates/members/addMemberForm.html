@@ -16,6 +16,8 @@
 </head>
 <body>
 <div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div  />
     <div class="py-5 text-center">
         <h2>회원 가입</h2>
     </div>
@@ -69,6 +71,9 @@
             </div>
         </div>
     </form>
+
+    <div th:replace="fragments/footer :: footer"/>
+
 </div> <!-- /container -->
 </body>
 </html>

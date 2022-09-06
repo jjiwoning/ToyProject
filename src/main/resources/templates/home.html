@@ -9,16 +9,17 @@
 
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div  />
     <div class="jumbotron">
         <h1>Simple Board</h1>
         <p class="lead">회원 기능</p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/login">로그인</a>
-            <a class="btn btn-lg btn-secondary" href="/members">로그아웃</a>
+            <a th:if="${session.loginMember==null}" class="btn btn-lg btn-secondary" href="/login">로그인</a>
+            <a th:if="${session.loginMember!=null}" class="btn btn-lg btn-secondary" href="/logout">로그아웃</a>
         </p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/members">회원 수정</a>
+            <a class="btn btn-lg btn-secondary" href="/add">회원 가입</a>
+            <a th:if="${session.loginMember!=null}" class="btn btn-lg btn-secondary" href="/members">회원 수정</a>
         </p>
         <p class="lead">상품 기능</p>
         <p>

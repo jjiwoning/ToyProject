@@ -4,16 +4,16 @@ import jiwon.board.domain.Member;
 import jiwon.board.dto.MemberSaveDto;
 import jiwon.board.exception.LoginFailException;
 import jiwon.board.service.MemberService;
+import jiwon.board.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -25,18 +25,23 @@ public class MemberController {
 
     //로그인
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult){
+    public String loginForm(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, @RequestParam(name = "exception", defaultValue = "") String message) {
+        if(message.equals("로그인 아이디가 잘못 됐습니다.")){
+            bindingResult.rejectValue("loginId", "아이디 오류", message);
+        }
+        if(message.equals("잘못된 비밀번호를 입력했습니다.")){
+            bindingResult.rejectValue("password", "비밀번호 오류", message);
+        }
         return "login/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult){
+    public String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest request){
         Member member = memberService.login(loginForm.getLoginId(), loginForm.getPassword());
-//        try{
-//            Member member = memberService.login(loginForm.getLoginId(), loginForm.getPassword());
-//        }catch (IllegalArgumentException e){
-//            bindingResult.reject("loginFail", "아이디 또는 비밀번호가");
-//        }
+
+        HttpSession httpSession = request.getSession(); // 세션이 있으면 기존 세션 리턴, 없으면 신규 생성
+        httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member);
+
         return "home";
     }
 
@@ -59,6 +64,15 @@ public class MemberController {
         Member member = memberSaveDto.toEntity();
         memberService.join(member);
         return "home";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession httpSession = request.getSession(false);
+        if(httpSession != null){
+            httpSession.invalidate();
+        }
+        return "redirect:/";
     }
 
     @ExceptionHandler({LoginFailException.class})

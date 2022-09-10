@@ -66,13 +66,26 @@ public class MemberController {
         }
         Member member = memberSaveDto.toEntity();
         memberService.join(member);
-        return "home";
+        return "redirect:/";
     }
 
+    //로그아웃
     @PostMapping("/logout")
     public String logout(HttpServletRequest request){
         HttpSession httpSession = request.getSession(false);
         if(httpSession != null){
+            httpSession.invalidate();
+        }
+        return "redirect:/";
+    }
+
+    //회원 탈퇴
+    @PostMapping("/delete")
+    public String delete(HttpServletRequest request){
+        HttpSession httpSession = request.getSession(false);
+        if(httpSession != null){
+            Member findMember = (Member)httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
+            memberService.delete(findMember.getId());
             httpSession.invalidate();
         }
         return "redirect:/";
@@ -83,6 +96,6 @@ public class MemberController {
     public String loginExceptionHandler(LoginFailException e, Model model){
         log.info("call Exception Handler");
         model.addAttribute("exception", e.getMessage());
-        return "redirect:/login";
+        return "redirect:/members/login";
     }
 }

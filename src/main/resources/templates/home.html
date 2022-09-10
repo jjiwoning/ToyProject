@@ -9,7 +9,7 @@
 
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <div  />
+    <div/>
     <div class="jumbotron">
         <h1>Simple Board</h1>
         <p class="lead">회원 기능</p>
@@ -24,6 +24,11 @@
         <p>
             <a th:if="${session.loginMember==null}" class="btn btn-lg btn-secondary" href="/members/add">회원 가입</a>
             <a th:if="${session.loginMember!=null}" class="btn btn-lg btn-secondary" href="/members/update">회원 수정</a>
+        <form th:if="${session.loginMember!=null}" th:action="@{/members/delete}" method="post">
+            <button class="btn btn-lg btn-secondary" type="submit">
+                회원 탈퇴
+            </button>
+        </form>
         </p>
         <p class="lead">게시판 기능</p>
         <p>

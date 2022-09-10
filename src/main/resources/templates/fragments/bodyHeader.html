@@ -5,4 +5,5 @@
         <li><a href="/">Home</a></li>
     </ul>
     <a href="/"><h3 class="text-muted">Simple Board</h3></a>
+    <h3 th:if="${session.loginMember!=null}" class="mb-3" th:text="|로그인 회원: ${session.loginMember.name}|">로그인 사용자 이름</h3>
 </div>

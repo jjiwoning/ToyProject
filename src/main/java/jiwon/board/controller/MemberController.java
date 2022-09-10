@@ -18,6 +18,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/members")
 @Slf4j
 public class MemberController {
 
@@ -36,13 +37,15 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest request){
+    public String login(@ModelAttribute("loginForm") LoginForm loginForm,
+                        @RequestParam(defaultValue = "/") String redirectURL,
+                        HttpServletRequest request){
         Member member = memberService.login(loginForm.getLoginId(), loginForm.getPassword());
 
         HttpSession httpSession = request.getSession(); // 세션이 있으면 기존 세션 리턴, 없으면 신규 생성
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member);
 
-        return "home";
+        return "redirect:" + redirectURL;
     }
 
     //회원 가입
@@ -75,6 +78,7 @@ public class MemberController {
         return "redirect:/";
     }
 
+    //로그인 실패 예외 처리 핸들러
     @ExceptionHandler({LoginFailException.class})
     public String loginExceptionHandler(LoginFailException e, Model model){
         log.info("call Exception Handler");

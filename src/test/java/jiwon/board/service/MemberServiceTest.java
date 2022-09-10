@@ -1,6 +1,7 @@
 package jiwon.board.service;
 
 import jiwon.board.domain.Member;
+import jiwon.board.exception.LoginFailException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 테스트")
+    @DisplayName("회원가입, 로그인 테스트")
     void login(){
         Member member = new Member("aaa", "1234", "tamtam", "asdf@asd.com", "010101010");
         memberService.join(member);
@@ -34,12 +35,12 @@ class MemberServiceTest {
 
         //로그인 실패 (아이디 오류)
         Assertions.assertThatThrownBy(() -> memberService.login("aaa2", "1234"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(LoginFailException.class)
                 .hasMessageContaining("로그인 아이디가 잘못 됐습니다.");
 
         //로그인 실패 (비밀번호 오류)
         Assertions.assertThatThrownBy(() -> memberService.login("aaa", "1235"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(LoginFailException.class)
                 .hasMessageContaining("잘못된 비밀번호를 입력했습니다.");
     }
 }

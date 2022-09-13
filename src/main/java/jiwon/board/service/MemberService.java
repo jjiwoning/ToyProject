@@ -36,10 +36,12 @@ public class MemberService {
 
     //회원 정보 업데이트
     @Transactional
-    public void update(Long id){
+    public Member update(Long id, String password, String name, String mail, String phoneNumber){
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 회원 정보입니다."));
-        //TODO: 어떤 방식으로 업데이트 파라미터 넘길지 고민
+        member.updateMember(password, name, mail, phoneNumber);
+
+        return member;
     }
 
     //중복 ID 확인

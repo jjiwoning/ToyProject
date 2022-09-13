@@ -44,4 +44,12 @@ public class Member extends BaseTimeEntity{
         }
         throw new LoginFailException("잘못된 비밀번호를 입력했습니다.");
     }
+
+    //회원 수정 메서드
+    public void updateMember(String password, String name, String mail, String phoneNumber){
+        this.password = password;
+        this.name = name;
+        this.mail = mail;
+        this.phoneNumber = phoneNumber;
+    }
 }

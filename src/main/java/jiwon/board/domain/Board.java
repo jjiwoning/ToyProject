@@ -32,4 +32,14 @@ public class Board extends BaseTimeEntity{
         this.contents = contents;
         this.member = member;
     }
+
+    public Board(String title, String contents){
+        this.title = title;
+        this.contents = contents;
+    }
+
+    //연관관계 메서드
+    public void updateMember(Member member){
+        this.member = member;
+    }
 }

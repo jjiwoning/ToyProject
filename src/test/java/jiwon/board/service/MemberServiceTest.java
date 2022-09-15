@@ -20,7 +20,12 @@ class MemberServiceTest {
     @Test
     @DisplayName("회원 탈퇴 테스트")
     void delete(){
+        Member member = new Member("aaa", "1234", "tamtam", "asdf@asd.com", "010101010");
+        memberService.join(member);
 
+        memberService.delete(member.getId());
+
+        Assertions.assertThat(memberService.existsMember(member.getLoginId())).isFalse();
     }
 
     @Test

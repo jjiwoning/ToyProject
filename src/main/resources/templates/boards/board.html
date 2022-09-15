@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div  />
+    <hr class="my-4">
+
+    <div class="py-5 text-center">
+        <h2>게시글 상세</h2>
+    </div>
+
+    <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" class="form-control" th:value="${boardDto.title}" readonly>
+    </div>
+    <div>
+        <label for="loginId">작성자</label>
+        <input type="text" id="loginId" name="loginId" class="form-control" th:value="${boardDto.getLoginId()}" readonly>
+    </div>
+    <div>
+        <label for="contents">내용</label>
+        <textarea type="text" id="contents" name="contents" class="form-control" th:text="${boardDto.getContents()}" th:value="${boardDto.getContents()}" readonly></textarea>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/boards/{itemId}/edit(itemId=${boardDto.id})}'|"
+                    type="button">게시글 수정</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/boards/{itemId}/delete(itemId=${boardDto.id})}'|"
+                    type="button">게시글 삭제</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='items.html'"
+                    th:onclick="|location.href='@{/boards}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div th:replace="fragments/footer :: footer"/>
+
+</div> <!-- /container -->
+</body>
+</html>

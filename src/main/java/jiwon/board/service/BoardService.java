@@ -2,6 +2,7 @@ package jiwon.board.service;
 
 import jiwon.board.domain.Board;
 import jiwon.board.domain.Member;
+import jiwon.board.dto.BoardPostDto;
 import jiwon.board.repository.BoardRepository;
 import jiwon.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,10 @@ public class BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 회원 id 입니다."));
         board.updateMember(member);
         boardRepository.save(board);
+    }
+
+    public BoardPostDto findOne(Long id){
+        return boardRepository.findDtoById(id);
     }
 
 }

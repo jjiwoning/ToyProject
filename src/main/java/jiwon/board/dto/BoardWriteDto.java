@@ -20,5 +20,4 @@ public class BoardWriteDto {
         return board;
     }
 
-
 }

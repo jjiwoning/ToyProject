@@ -8,6 +8,7 @@
         .container {
             max-width: 560px;
         }
+
         .field-error {
             border-color: #dc3545;
             color: #dc3545;
@@ -18,7 +19,7 @@
 
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <div  />
+    <div/>
     <hr class="my-4">
     <div class="py-5 text-center">
         <h2>게시글 등록</h2>
@@ -28,16 +29,17 @@
         <div>
             <label for="title">제목</label>
             <input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요">
-            <div class="field-error" th:errors="*{title}" />
+            <div class="field-error" th:errors="*{title}"/>
         </div>
         <div>
             <label for="name">작성자</label>
-            <input type="text" id="name" name="name" class="form-control" th:value="${session.loginMember.name}" readonly>
+            <input type="text" id="name" name="name" class="form-control" th:value="${session.loginMember.name}"
+                   readonly>
         </div>
         <div>
             <label for="contents">내용</label>
             <textarea type="text" id="contents" name="contents" class="form-control" placeholder="내용을 입력하세요"></textarea>
-            <div class="field-error" th:errors="*{contents}" />
+            <div class="field-error" th:errors="*{contents}"/>
         </div>
 
         <hr class="my-4">
@@ -50,7 +52,8 @@
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='items.html'"
                         th:onclick="|location.href='@{/}'|"
-                        type="button">취소</button>
+                        type="button">취소
+                </button>
             </div>
         </div>
 

@@ -132,7 +132,7 @@ public class MemberController {
     //로그인 실패 예외 처리 핸들러
     @ExceptionHandler({LoginFailException.class})
     public String loginExceptionHandler(LoginFailException e, Model model){
-        log.info("call Exception Handler = {}", e);
+        log.info("call Exception Handler e = ", e);
         model.addAttribute("exception", e.getMessage());
         return "redirect:/members/login";
     }

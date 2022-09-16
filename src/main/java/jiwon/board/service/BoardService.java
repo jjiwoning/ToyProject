@@ -2,12 +2,17 @@ package jiwon.board.service;
 
 import jiwon.board.domain.Board;
 import jiwon.board.domain.Member;
-import jiwon.board.dto.BoardPostDto;
+import jiwon.board.dto.BoardReadDto;
+import jiwon.board.dto.BoardSearchCondition;
 import jiwon.board.repository.BoardRepository;
 import jiwon.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,8 +30,11 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public BoardPostDto findOne(Long id){
+    public BoardReadDto findOne(Long id){
         return boardRepository.findDtoById(id);
     }
 
+    public List<Board> findList(BoardSearchCondition condition, Long page) {
+        return boardRepository.search(condition, page);
+    }
 }

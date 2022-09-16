@@ -5,41 +5,16 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <div>
-        <!--        <table class="table table-striped">-->
-        <!--            <thead>-->
-        <!--            <tr>-->
-        <!--                <th>#</th>-->
-        <!--                <th>상품명</th>-->
-        <!--                <th>가격</th>-->
-        <!--                <th>재고수량</th>-->
-        <!--                <th></th>-->
-        <!--            </tr>-->
-        <!--            </thead>-->
-        <!--            <tbody>-->
-        <!--            <tr th:each="item : ${items}">-->
-        <!--                <td th:text="${item.id}"></td>-->
-        <!--                <td th:text="${item.name}"></td>-->
-        <!--                <td th:text="${item.price}"></td>-->
-        <!--                <td th:text="${item.stockQuantity}"></td>-->
-        <!--                <td>-->
-        <!--                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"-->
-        <!--                       class="btn btn-primary" role="button">수정</a>-->
-        <!--                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"-->
-        <!--                       class="btn btn-primary" role="button">삭제</a>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
         <table class="table">
             <tr>
-                <th>글 번호</th>
-                <th>글쓴이</th>
                 <th>글 제목</th>
+                <th>글쓴이</th>
+                <th>날짜</th>
             </tr>
-            <tr th:each="board: ${boardList}">
-                <td th:text="${board.id}"></td>
-                <td th:text="${board.writer.name}"></td>
+            <tr th:each="board: ${boards}">
                 <td th:text="${board.title}"></td>
+                <td th:text="${board.getMember().loginId}"></td>
+                <td th:text="${board.createdDate.toLocalDate()}"></td>
             </tr>
         </table>
 

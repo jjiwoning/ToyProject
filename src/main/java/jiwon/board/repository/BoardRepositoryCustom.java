@@ -1,12 +1,15 @@
 package jiwon.board.repository;
 
-import jiwon.board.dto.BoardPostDto;
+import jiwon.board.domain.Board;
+import jiwon.board.dto.BoardReadDto;
 import jiwon.board.dto.BoardSearchCondition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface BoardRepositoryCustom {
-    Page<BoardPostDto> search(BoardSearchCondition condition, Pageable pageable);
+import java.util.List;
 
-    BoardPostDto findDtoById(Long id);
+public interface BoardRepositoryCustom {
+    List<Board> search(BoardSearchCondition condition, long page);
+
+    BoardReadDto findDtoById(Long id);
 }

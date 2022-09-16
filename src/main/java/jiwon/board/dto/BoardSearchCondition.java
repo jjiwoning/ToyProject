@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class BoardSearchCondition {
-    private String titleName;
+    private String titleAndContent;
 }

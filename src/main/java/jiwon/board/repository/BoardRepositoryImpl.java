@@ -1,15 +1,17 @@
 package jiwon.board.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jiwon.board.domain.QBoard;
-import jiwon.board.dto.BoardPostDto;
+import jiwon.board.domain.Board;
+import jiwon.board.dto.BoardReadDto;
 import jiwon.board.dto.BoardSearchCondition;
-import jiwon.board.dto.QBoardPostDto;
+import jiwon.board.dto.QBoardReadDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static jiwon.board.domain.QBoard.*;
 import static jiwon.board.domain.QMember.member;
@@ -24,15 +26,31 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public Page<BoardPostDto> search(BoardSearchCondition condition, Pageable pageable) {
-        return null;
+    public List<Board> search(BoardSearchCondition condition, long page) {
+        log.info("call boardRepository.search()");
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if (StringUtils.hasText(condition.getTitleAndContent())) {
+            builder.or(board.title.contains(condition.getTitleAndContent()));
+            builder.or(board.contents.contains(condition.getTitleAndContent()));
+        }
+
+        return queryFactory
+                .select(board)
+                .from(board)
+                .join(board.member, member).fetchJoin()
+                .where(builder)
+                .offset((Math.max(1, page) -1) * 20)
+                .limit(20)
+                .orderBy(board.createdDate.desc())
+                .fetch();
     }
 
     @Override
-    public BoardPostDto findDtoById(Long id) {
+    public BoardReadDto findDtoById(Long id) {
         log.info("call findDtoById");
         return queryFactory
-                .select(new QBoardPostDto(
+                .select(new QBoardReadDto(
                         board.id,
                         board.title,
                         board.contents,
@@ -42,4 +60,5 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .where(board.id.eq(id))
                 .fetchOne();
     }
+
 }

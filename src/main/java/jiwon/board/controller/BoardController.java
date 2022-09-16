@@ -2,7 +2,8 @@ package jiwon.board.controller;
 
 import jiwon.board.domain.Board;
 import jiwon.board.domain.Member;
-import jiwon.board.dto.BoardPostDto;
+import jiwon.board.dto.BoardReadDto;
+import jiwon.board.dto.BoardSearchCondition;
 import jiwon.board.dto.BoardWriteDto;
 import jiwon.board.service.BoardService;
 import jiwon.board.session.SessionConst;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -50,9 +52,17 @@ public class BoardController {
     //게시글 1건 조회
     @GetMapping("/{id}")
     public String findOne(@PathVariable Long id, Model model) {
-        BoardPostDto findDto = boardService.findOne(id);
+        BoardReadDto findDto = boardService.findOne(id);
         model.addAttribute("boardDto", findDto);
         return "boards/board";
+    }
+
+    //게시글 리스트 조회 + 검색 조건
+    @GetMapping
+    public String getList(Model model, @ModelAttribute BoardSearchCondition condition, @RequestParam(defaultValue = "1") long page){
+        List<Board> boards = boardService.findList(condition, page);
+        model.addAttribute("boards", boards);
+        return "boards/boardList";
     }
 
 }

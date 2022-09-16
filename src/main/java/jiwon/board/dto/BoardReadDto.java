@@ -1,11 +1,10 @@
 package jiwon.board.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import jiwon.board.domain.Board;
 import lombok.Data;
 
 @Data
-public class BoardPostDto {
+public class BoardReadDto {
 
     private Long id;
 
@@ -16,7 +15,7 @@ public class BoardPostDto {
     private String loginId;
 
     @QueryProjection
-    public BoardPostDto(Long id, String title, String contents, String loginId) {
+    public BoardReadDto(Long id, String title, String contents, String loginId) {
         this.id = id;
         this.title = title;
         this.contents = contents;

@@ -43,4 +43,11 @@ public class BoardService {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+        boardRepository.delete(board);
+    }
 }

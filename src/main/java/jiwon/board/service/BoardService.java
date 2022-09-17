@@ -37,4 +37,10 @@ public class BoardService {
     public List<Board> findList(BoardSearchCondition condition, Long page) {
         return boardRepository.search(condition, page);
     }
+
+    @Transactional
+    public void update(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+    }
 }

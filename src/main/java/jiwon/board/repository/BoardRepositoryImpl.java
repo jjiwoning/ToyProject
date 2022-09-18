@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 import static jiwon.board.domain.QBoard.*;
 import static jiwon.board.domain.QMember.member;
@@ -47,9 +48,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public BoardReadDto findDtoById(Long id) {
+    public Optional<BoardReadDto> findDtoById(Long id) {
         log.info("call findDtoById");
-        return queryFactory
+        return Optional.ofNullable(queryFactory
                 .select(new QBoardReadDto(
                         board.id,
                         board.title,
@@ -59,7 +60,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 )).from(board)
                 .join(board.member, member)
                 .where(board.id.eq(id))
-                .fetchOne();
+                .fetchOne());
     }
 
 }

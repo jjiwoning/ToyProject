@@ -31,7 +31,8 @@ public class BoardService {
     }
 
     public BoardReadDto findOne(Long id){
-        return boardRepository.findDtoById(id);
+        return boardRepository.findDtoById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
     }
 
     public List<Board> findList(BoardSearchCondition condition, Long page) {

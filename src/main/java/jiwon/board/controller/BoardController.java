@@ -65,4 +65,9 @@ public class BoardController {
         return "boards/boardList";
     }
 
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable Long id){
+        return "boards/board";
+    }
+
 }

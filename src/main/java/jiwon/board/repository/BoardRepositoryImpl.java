@@ -54,6 +54,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         board.id,
                         board.title,
                         board.contents,
+                        member.id,
                         member.loginId
                 )).from(board)
                 .join(board.member, member)

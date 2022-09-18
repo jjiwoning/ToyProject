@@ -24,12 +24,14 @@ class BoardServiceTest {
 
     @Autowired
     EntityManager em;
-    @Autowired BoardService boardService;
-    @Autowired MemberService memberService;
+    @Autowired
+    BoardService boardService;
+    @Autowired
+    MemberService memberService;
 
     @Test
     @DisplayName("게시물 저장 테스트")
-    void save(){
+    void save() {
         Board board = new Board("aaa", "aaa");
         Member member = new Member("test", "test!", "test", "aaa@aaa.com", "0101010");
 
@@ -41,7 +43,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("게시물 단건조회 테스트")
-    void findOne(){
+    void findOne() {
         Board board = new Board("aaa", "aaa");
         Member member = new Member("test", "test!", "test", "aaa@aaa.com", "0101010");
 
@@ -58,7 +60,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("게시물 여러 건 조회 테스트")
-    void findAll(){
+    void findAll() {
         //given
         Member memberA = new Member("memberA", "aaa", "aaa", "aaa@aaa.com", "12334");
         Member memberB = new Member("memberB", "aaa", "bbb", "aaa@aaa.com", "12334");
@@ -85,4 +87,30 @@ class BoardServiceTest {
         assertThat(result.get(0).getTitle()).isEqualTo("test29");
     }
 
+    @Test
+    @DisplayName("게시글 업데이트 테스트")
+    void update(){
+        //TODO:
+        //given
+
+        //when
+
+        //then
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 테스트")
+    void delete(){
+        //given
+        Board board = new Board("aaa", "aaa");
+        em.persist(board);
+        em.flush();
+        em.clear();
+
+        //when
+        boardService.delete(board.getId());
+
+        //then
+        assertThat(boardService.findOne(board.getId())).isNull();
+    }
 }

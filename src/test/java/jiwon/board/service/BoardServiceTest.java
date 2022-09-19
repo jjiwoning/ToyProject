@@ -90,12 +90,16 @@ class BoardServiceTest {
     @Test
     @DisplayName("게시글 업데이트 테스트")
     void update(){
-        //TODO:
         //given
+        Board board = new Board("aaa", "aaa");
+        em.persist(board);
 
         //when
+        boardService.update(board.getId(), "bbb", "bbb");
 
         //then
+        assertThat(board.getTitle()).isEqualTo("bbb");
+        assertThat(board.getContents()).isEqualTo("bbb");
     }
 
     @Test
@@ -104,13 +108,13 @@ class BoardServiceTest {
         //given
         Board board = new Board("aaa", "aaa");
         em.persist(board);
-        em.flush();
-        em.clear();
 
         //when
         boardService.delete(board.getId());
 
         //then
-        assertThat(boardService.findOne(board.getId())).isNull();
+        assertThatThrownBy(() -> boardService.findOne(board.getId()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("존재하지 않는 게시글입니다.");
     }
 }

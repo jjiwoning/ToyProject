@@ -20,4 +20,9 @@ public class BoardWriteDto {
         return board;
     }
 
+    public void toDto(Board board) {
+        this.title = board.getTitle();
+        this.contents = board.getContents();
+    }
+
 }

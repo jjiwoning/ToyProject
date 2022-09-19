@@ -42,4 +42,18 @@ public class Board extends BaseTimeEntity{
     public void updateMember(Member member){
         this.member = member;
     }
+
+    //Board 작성 Member 체크 메서드
+    public boolean isWritten(Long memberId) {
+        if (this.member.getId().equals(memberId)) {
+            return true;
+        }
+        return false;
+    }
+
+    //update 메서드
+    public void updateBoard(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
 }

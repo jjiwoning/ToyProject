@@ -50,7 +50,6 @@
         </div>
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg"
-                    formmethod="post"
                     th:if="${session.loginMember.id == boardDto.memberId}"
                     onclick="location.href='editForm.html'"
                     th:onclick="|location.href='@{/boards/{itemId}/delete(itemId=${boardDto.boardId})}'|"

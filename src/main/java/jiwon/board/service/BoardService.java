@@ -35,14 +35,20 @@ public class BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
     }
 
+    public Board findById(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+    }
+
     public List<Board> findList(BoardSearchCondition condition, Long page) {
         return boardRepository.search(condition, page);
     }
 
     @Transactional
-    public void update(Long id) {
+    public void update(Long id, String title, String contents) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+        board.updateBoard(title, contents);
     }
 
     @Transactional

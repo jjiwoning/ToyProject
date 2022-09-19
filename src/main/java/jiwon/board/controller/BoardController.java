@@ -46,7 +46,7 @@ public class BoardController {
             Board board = boardWriteDto.toEntity();
             boardService.write(board, member.getId());
         }
-        return "home";
+        return "redirect:/";
     }
 
     //게시글 1건 조회

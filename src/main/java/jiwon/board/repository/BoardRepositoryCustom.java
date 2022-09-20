@@ -11,4 +11,6 @@ public interface BoardRepositoryCustom {
     List<Board> search(BoardSearchCondition condition, long page);
 
     Optional<BoardReadDto> findDtoById(Long id);
+
+    void deleteByMemberId(Long memberId);
 }

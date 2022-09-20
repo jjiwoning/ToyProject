@@ -63,4 +63,12 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .fetchOne());
     }
 
+    @Override
+    public void deleteByMemberId(Long memberId) {
+        queryFactory
+                .delete(board)
+                .where(board.member.id.in(memberId))
+                .execute();
+    }
+
 }

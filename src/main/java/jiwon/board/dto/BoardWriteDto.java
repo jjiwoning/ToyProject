@@ -1,7 +1,6 @@
 package jiwon.board.dto;
 
 import jiwon.board.domain.Board;
-import jiwon.board.domain.Member;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

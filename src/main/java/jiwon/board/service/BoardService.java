@@ -7,8 +7,6 @@ import jiwon.board.dto.BoardSearchCondition;
 import jiwon.board.repository.BoardRepository;
 import jiwon.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

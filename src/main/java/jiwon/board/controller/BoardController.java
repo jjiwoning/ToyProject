@@ -42,9 +42,9 @@ public class BoardController {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+            Long memberId = (Long) session.getAttribute(SessionConst.LOGIN_MEMBER);
             Board board = boardWriteDto.toEntity();
-            boardService.write(board, member.getId());
+            boardService.write(board, memberId);
         }
         return "redirect:/";
     }
@@ -108,9 +108,9 @@ public class BoardController {
 
     private String checkBoardMember(HttpServletRequest request, Board board) {
         HttpSession session = request.getSession(false);
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = (Long) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        if (!board.isWritten(member.getId())) {
+        if (!board.isWritten(memberId)) {
             return "redirect:/boards";
         }
         return null;

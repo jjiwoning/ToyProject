@@ -51,8 +51,8 @@ public class MemberController {
     public String delete(HttpServletRequest request){
         HttpSession httpSession = request.getSession(false);
         if(httpSession != null){
-            Member findMember = (Member)httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
-            memberService.delete(findMember.getId());
+            Long memberId = (Long)httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
+            memberService.delete(memberId);
             httpSession.invalidate();
         }
         return "redirect:/";
@@ -63,7 +63,8 @@ public class MemberController {
     public String updateForm(@ModelAttribute MemberUpdateDto memberUpdateDto, HttpServletRequest request){
         HttpSession httpSession = request.getSession(false);
         if(httpSession != null){
-            Member findMember = (Member) httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
+            Long memberId = (Long) httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
+            Member findMember = memberService.findMember(memberId);
             memberUpdateDto.toDto(findMember);
         }
         return "members/updateMemberForm";
@@ -78,10 +79,9 @@ public class MemberController {
 
         HttpSession httpSession = request.getSession(false);
         if(httpSession != null){
-            Member findMember = (Member) httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
-            Long id = findMember.getId();
+            Long memberId = (Long) httpSession.getAttribute(SessionConst.LOGIN_MEMBER);
             Member updateMember = memberService.update(
-                    id,
+                    memberId,
                     memberUpdateDto.getPassword(),
                     memberUpdateDto.getName(),
                     memberUpdateDto.getMail(),
@@ -114,7 +114,7 @@ public class MemberController {
         Member member = memberService.login(loginForm.getLoginId(), loginForm.getPassword());
 
         HttpSession httpSession = request.getSession(); // 세션이 있으면 기존 세션 리턴, 없으면 신규 생성
-        httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member);
+        httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
 
         return "redirect:" + redirectURL;
     }

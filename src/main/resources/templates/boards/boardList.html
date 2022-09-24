@@ -4,6 +4,23 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form th:object="${condition}" method="get" class="form-inline">
+        <div class="row">
+            <div class="col">
+                <input type="text" th:field="*{titleAndContent}" class="form-control" placeholder="제목, 내용"/>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-secondary mb-2">글 검색</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary float-end"
+                        onclick="location.href='addForm.html'"
+                        th:onclick="|location.href='@{/boards/write}'|"
+                        type="button">글 등록
+                </button>
+            </div>
+        </div>
+    </form>
     <div>
         <table class="table">
             <tr>
@@ -12,7 +29,9 @@
                 <th>날짜</th>
             </tr>
             <tr th:each="board: ${boards}">
-                <td th:text="${board.title}"></td>
+                <td>
+                    <a th:text="${board.title}" th:href="@{/boards/{id}(id=${board.id})}"></a>
+                </td>
                 <td th:text="${board.getMember().loginId}"></td>
                 <td th:text="${board.createdDate.toLocalDate()}"></td>
             </tr>
@@ -20,28 +39,30 @@
 
         <nav style="text-align: center;">
             <ul class="pagination">
-                <li class="disabled">
-                    <a href="#" aria-label="First">
+                <li>
+                    <a th:href="@{/boards(page=1)}" aria-label="First">
                         <span aria-hidden="true">First</span>
                     </a>
                 </li>
-                <li class="disabled">
-                    <a href="#" aria-label="Previous">
+
+                <li th:class="${startPage} ? 'disabled'">
+                    <a th:href="${startPage} ? '#' :@{/boards(page=${page - 1})}" aria-label="Previous">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
+
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                    <a th:text="${page}" th:href="@{/boards(page=${page})}"></a>
+                </li>
+
+                <li th:class="${endPage} ? 'disabled'">
+                    <a th:href="${endPage} ? '#' : @{/boards(page=${page + 1})}" aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
+
                 <li>
-                    <a href="#" aria-label="Last">
+                    <a th:href="@{/boards(page=${endPage})}" aria-label="Last">
                         <span aria-hidden="true">Last</span>
                     </a>
                 </li>

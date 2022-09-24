@@ -59,9 +59,14 @@ public class BoardController {
 
     //게시글 리스트 조회 + 검색 조건
     @GetMapping
-    public String getList(Model model, @ModelAttribute BoardSearchCondition condition, @RequestParam(defaultValue = "1") long page) {
+    public String getList(Model model, @ModelAttribute(name = "condition") BoardSearchCondition condition, @RequestParam(defaultValue = "1") long page) {
         List<Board> boards = boardService.findList(condition, page);
+        long startPage = Math.max(page - 4, 1);
+        long endPage = Math.min(page + 9, boards.size() /20 + 1);
         model.addAttribute("boards", boards);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("page", page);
         return "boards/boardList";
     }
 

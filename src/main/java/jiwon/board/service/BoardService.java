@@ -42,6 +42,10 @@ public class BoardService {
         return boardRepository.search(condition, page);
     }
 
+    public Long findBoardTotalCount(BoardSearchCondition condition) {
+        return boardRepository.getBoardTotalCount(condition);
+    }
+
     @Transactional
     public void update(Long id, String title, String contents) {
         Board board = boardRepository.findById(id)

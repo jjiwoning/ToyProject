@@ -48,6 +48,22 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
+    public Long getBoardTotalCount(BoardSearchCondition condition) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if (StringUtils.hasText(condition.getTitleAndContent())) {
+            builder.or(board.title.contains(condition.getTitleAndContent()));
+            builder.or(board.contents.contains(condition.getTitleAndContent()));
+        }
+
+        return queryFactory
+                .select(board.count())
+                .from(board)
+                .where(builder)
+                .fetchOne();
+    }
+
+    @Override
     public Optional<BoardReadDto> findDtoById(Long id) {
         log.info("call findDtoById");
         return Optional.ofNullable(queryFactory

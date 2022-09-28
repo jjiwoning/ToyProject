@@ -61,8 +61,9 @@ public class BoardController {
     @GetMapping
     public String getList(Model model, @ModelAttribute(name = "condition") BoardSearchCondition condition, @RequestParam(defaultValue = "1") long page) {
         List<Board> boards = boardService.findList(condition, page);
+        Long totalCount = boardService.findBoardTotalCount(condition);
         long startPage = Math.max(page - 4, 1);
-        long endPage = Math.min(page + 9, boards.size() /20 + 1);
+        long endPage = Math.min(page + 9, totalCount / 20 + 1);
         model.addAttribute("boards", boards);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

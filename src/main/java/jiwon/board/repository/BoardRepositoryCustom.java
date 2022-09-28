@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface BoardRepositoryCustom {
     List<Board> search(BoardSearchCondition condition, long page);
 
+    Long getBoardTotalCount(BoardSearchCondition condition);
+
     Optional<BoardReadDto> findDtoById(Long id);
 
     void deleteByMemberId(Long memberId);

@@ -51,8 +51,8 @@
                     </a>
                 </li>
 
-                <li th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                    <a th:text="${page}" th:href="@{/boards(page=${page})}"></a>
+                <li th:each="now : ${#numbers.sequence(startPage, endPage)}">
+                    <a th:text="${now}" th:href="@{/boards(page=${now})}"></a>
                 </li>
 
                 <li th:class="${endPage} ? 'disabled'">

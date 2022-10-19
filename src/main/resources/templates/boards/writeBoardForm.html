@@ -28,7 +28,7 @@
     <form action="" th:action th:object="${boardWriteDto}" method="post">
         <div>
             <label for="title">제목</label>
-            <input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요">
+            <input type="text" id="title" name="title" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요">
             <div class="field-error" th:errors="*{title}"/>
         </div>
         <div>
@@ -38,7 +38,7 @@
         </div>
         <div>
             <label for="contents">내용</label>
-            <textarea type="text" id="contents" name="contents" class="form-control" placeholder="내용을 입력하세요"></textarea>
+            <textarea type="text" id="contents" name="contents" class="form-control" th:field="*{contents}" placeholder="내용을 입력하세요"></textarea>
             <div class="field-error" th:errors="*{contents}"/>
         </div>
 

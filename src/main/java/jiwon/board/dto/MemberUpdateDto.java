@@ -1,6 +1,7 @@
 package jiwon.board.dto;
 
 import jiwon.board.domain.Member;
+import jiwon.board.valid.PhoneNumber;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -23,8 +24,7 @@ public class MemberUpdateDto {
     private String mail;
 
     @NotBlank(message = "전화번호는 필수입니다.")
-    @Positive(message = "전화번호는 숫자만 입력해주세요 (010xxxxxxxx 형태)")
-    @Size(min = 11, max = 11, message = "전화번호 형식이 올바르지 않습니다.(010xxxxxxxx 형태)")
+    @PhoneNumber
     private String phoneNumber;
 
     public void toDto(Member member){
